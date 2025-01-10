@@ -1,0 +1,28 @@
+---
+import { getBlog, type EntryTime } from "../../types/microcmsReservation";
+const res = await getBlog({ fields: ["title", "content"] });
+---
+
+<div class="blog">
+  {
+    res.contents.map((item: any) => (
+      <>
+        <h4>{item.title}</h4>
+        <div class="content" set:html={item.content} />
+      </>
+    ))
+  }
+</div>
+
+<style lang="scss">
+  div.blog {
+    padding: 40px;
+    border-top: 2px solid var(--b);
+    h4 {
+      font-size: 30px;
+      margin-bottom: 40px;
+    }
+    div.content {
+    }
+  }
+</style>

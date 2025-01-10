@@ -1,4 +1,5 @@
 ---
+import ReservationMailBnr from "@/components/parts/ReservationMailBnr.astro";
 import LayoutLocation from "../layouts/LayoutLocation.astro";
 ---
 
@@ -10,101 +11,18 @@ import LayoutLocation from "../layouts/LayoutLocation.astro";
   <main>
     <section id="contact">
       <div class="cInner">
-        <h2>Reservation Form</h2>
+        <h2>Reservation Mail Has Been Sent.</h2>
         <p class="contact-txt">
           We will send a reply email<br />after confirming your reservation
-          email.
+          email.<br />
+          If you do not receive a reply within a few days, please contact us directly
+          via email.
         </p>
-        <script src="https://www.google.com/recaptcha/api.js" async defer
-        ></script>
-        <form action="https://ssgform.com/s/nBKCi25QAHnL" method="post">
-          <div class="Form">
-            <div class="Form-Item">
-              <p class="Form-Item-Label">Name</p>
-
-              <input
-                type="text"
-                name="name"
-                placeholder="tanaka taro"
-                class="Form-Item-Input"
-                required
-              />
-            </div>
-            <div class="Form-Item">
-              <p class="Form-Item-Label">Phone number</p>
-
-              <input
-                type="text"
-                name="tel"
-                class="Form-Item-Input"
-                placeholder="000-0000-0000"
-                required
-              />
-            </div>
-            <div class="Form-Item">
-              <p class="Form-Item-Label">Mail address</p>
-
-              <input
-                type="email"
-                name="email"
-                class="Form-Item-Input"
-                placeholder="example@gmail.com"
-                required
-              />
-            </div>
-
-            <div class="Form-Item">
-              <p class="Form-Item-Label">Number of people for reservation</p>
-
-              <input
-                type="text"
-                name="number"
-                class="Form-Item-Input"
-                placeholder="4"
-                required
-              />
-            </div>
-
-            <div class="Form-Item">
-              <p class="Form-Item-Label">Date and time for reservation</p>
-
-              <input
-                id="date"
-                type="text"
-                name="date"
-                class="Form-Item-Input"
-                placeholder="◯/◯ 10:00-14:00"
-                readonly
-              />
-            </div>
-            <div
-              class="g-recaptcha"
-              data-sitekey="6Lc4N7MqAAAAALzpll_7BTrd2TOERbE7DlYBortw"
-            >
-            </div><!-- 専用タグの設置必要 -->
-
-            <input type="submit" class="Form-Btn" value="send" />
-          </div>
-        </form>
       </div>
+      <ReservationMailBnr />
     </section>
   </main>
 </LayoutLocation>
-
-<script>
-  // ページ読み込み時にURLパラメータを取得して入力欄に設定
-  document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
-    const date = params.get("date");
-    if (date) {
-      const decodedDate = decodeURIComponent(date);
-      const dateInput = document.getElementById("date") as HTMLInputElement;
-      if (dateInput) {
-        dateInput.value = decodedDate;
-      }
-    }
-  });
-</script>
 
 <style lang="scss">
   main {

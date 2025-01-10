@@ -73,6 +73,10 @@ const calendar = generateCalendar();
 ---
 
 <main>
+  <p class="calender-ttl">Reservable Schedule</p>
+  <p class="calender-ttl-txt">
+    Please click on the available times slot in the calendar.
+  </p>
   <h1 class="pageTitle">{currentYear}年{monthNames[currentMonth]}月</h1>
   <table class="calendar">
     <thead>
@@ -89,7 +93,7 @@ const calendar = generateCalendar();
                 {day.day && <div class="date-number">{day.day}</div>}
                 {day.times &&
                   day.times.map((time) => {
-                    const dateParam = `${monthNames[currentMonth]}月${day.day}日 ${time.entryTime}`;
+                    const dateParam = `${monthNames[currentMonth]}/${day.day} ${time.entryTime}`;
 
                     return (
                       <form action="/contact" method="get">
@@ -116,6 +120,13 @@ const calendar = generateCalendar();
   }
   .calender-ttl {
     font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .calender-ttl-txt {
+    font-size: 20px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 30px;

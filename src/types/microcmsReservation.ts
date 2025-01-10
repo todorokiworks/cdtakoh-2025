@@ -32,3 +32,11 @@ export const getReservation = async (queries?: MicroCMSQueries) => {
     queries,
   });
 };
+
+
+export const getBlog = async (queries?: MicroCMSQueries) => {
+  return await client.get({
+    endpoint: "blog",
+    queries
+  })
+}
