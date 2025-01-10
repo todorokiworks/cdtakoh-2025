@@ -27,6 +27,9 @@ const res = await getBlog({ fields: ["title", "content", "image"] });
   div.blog {
     padding: 40px;
     border-top: 2px solid var(--b);
+    @media (max-width: 768px) {
+      padding: 40px 20px;
+    }
     h4 {
       font-size: 30px;
       margin-bottom: 40px;
