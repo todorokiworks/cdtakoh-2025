@@ -1,0 +1,185 @@
+---
+import { formatInTimeZone } from "date-fns-tz";
+
+import {
+  getReservation,
+  type EntryTime,
+} from "../../types/microcmsReservation";
+const reservationRes = await getReservation({
+  fields: ["entryMonth", "entryDates", "entryTimes"],
+});
+
+interface CalendarDay {
+  day: number | null; // 日付 (nullなら空白)
+  times?: EntryTime[]; // 該当する時間のデータ
+}
+
+// 現在日付を設定
+const jstDate = formatInTimeZone(
+  new Date(reservationRes.contents[0].entryMonth),
+  "Asia/Tokyo",
+  "yyyy-MM-dd",
+);
+
+const currentYear: number = parseInt(jstDate.split("-")[0]);
+const currentMonth: number = parseInt(jstDate.split("-")[1]) - 1;
+
+// 月名の配列
+const weeks = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const monthNames: string[] = Array.from({ length: 12 }, (_, i) =>
+  String(i + 1),
+);
+
+// JSONデータから該当する日付と時間をマッピングする関数
+function getTimesForDay(day: number): EntryTime[] | undefined {
+  const date = new Date(currentYear, currentMonth, day);
+  const targetDate = formatInTimeZone(date, "Asia/Tokyo", "yyyy-MM-dd");
+
+  // entryDateをJSTに変換して比較
+  const match = reservationRes.contents[0].entryDates.find((d: any) => {
+    if (!d.entryDate) return false;
+    const entryDateJST = formatInTimeZone(
+      new Date(d.entryDate),
+      "Asia/Tokyo",
+      "yyyy-MM-dd",
+    );
+    return entryDateJST === targetDate;
+  });
+
+  return match?.entryTimes;
+}
+
+// 当月のカレンダーを生成する関数
+function generateCalendar(): CalendarDay[] {
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay(); // 月の初日の曜日
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate(); // 月の日数
+  const calendar: CalendarDay[] = [];
+
+  // 空白部分 (先頭を埋める)
+  for (let i = 0; i < firstDay; i++) {
+    calendar.push({ day: null });
+  }
+
+  // 日付部分
+  for (let day = 1; day <= daysInMonth; day++) {
+    const times = getTimesForDay(day);
+    calendar.push({ day, times });
+  }
+
+  return calendar;
+}
+
+const calendar = generateCalendar();
+---
+
+<main>
+  <p class="calender-ttl">Reservable Schedule</p>
+  <h1 class="pageTitle">{currentYear}/{monthNames[currentMonth]}</h1>
+  <table class="calendar">
+    <thead>
+      <tr class="calendar-header">
+        {weeks.map((week) => <th>{week}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {
+        Array.from({ length: Math.ceil(calendar.length / 7) }, (_, i) => (
+          <tr>
+            {calendar.slice(i * 7, (i + 1) * 7).map((day) => (
+              <td class={`day ${day.day ? "" : "empty"}`}>
+                {day.day && <div class="date-number">{day.day}</div>}
+                {day.times &&
+                  day.times.map((time) => {
+                    const dateParam = `${monthNames[currentMonth]}月${day.day}日 ${time.entryTime}`;
+
+                    return (
+                      <form action="/contact" method="get">
+                        <input type="hidden" name="date" value={dateParam} />
+                        <button type="submit" class="time-link">
+                          {time.entryTime}
+                        </button>
+                      </form>
+                    );
+                  })}
+              </td>
+            ))}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</main>
+
+<style lang="scss">
+  main {
+    padding-block: 64px;
+    padding-inline: 16px;
+  }
+  .calender-ttl {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .pageTitle {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .calendar {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    border-collapse: collapse;
+    border-spacing: 1px;
+  }
+  .calendar-header {
+    font-size: 14px;
+    background-color: var(--b);
+    color: #000;
+    th {
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+  }
+  .date-number {
+    margin-bottom: 8px;
+  }
+  .day {
+    font-weight: bold;
+    text-align: center;
+    width: calc(100% / 7);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    height: 120px;
+    vertical-align: top;
+  }
+  th:nth-child(1),
+  td:nth-child(7n + 1) {
+    color: #ff0000;
+  }
+  th:nth-child(7),
+  td:nth-child(7n) {
+    color: #0000ff;
+  }
+  .time-link {
+    color: #000;
+    font-weight: normal;
+    text-decoration: none;
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    color: inherit;
+    cursor: pointer;
+    padding: 4px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 4px;
+    &:hover {
+      border-color: #ff0000;
+      background-color: #fff0f5;
+    }
+  }
+</style>

@@ -1,0 +1,130 @@
+---
+import LayoutContent from "../layouts/LayoutContent.astro";
+import LayoutLocation from "../layouts/LayoutLocation.astro";
+---
+
+<LayoutContent
+    title="Menu | CD.TAKOH2 | Japanese Yoshoku cuisine"
+    name="Menu"
+    url="mv_menu.png"
+>
+    <div class="content__inner">
+        <h2>Course PAVILION Special Menu</h2>
+        <p class="txt">Course serves</p>
+        <ul class="flow">
+            <li>Appetizers</li>
+            <li>Signature salad soup</li>
+            <li>Today’s main dish</li>
+            <li>Our specialty</li>
+            <li>Dessert</li>
+        </ul>
+        <p class="txt">Course meal including</p>
+        <ul class="menu">
+            <li>Seasonal appetizers and signature salad</li>
+            <li>Our specialties Rich demi-glace sauce omelette riceT</li>
+            <li>The highest grade Japanese beef cutlet sandwich</li>
+            <li>Seasonal desserts</li>
+        </ul>
+
+        <p class="txt-below">
+            Lunch / dinner course JPY 6000. <br />Per person including 10% tax
+            and 10% service fee.<br />Alcohol is NOT included in the price
+            above.
+        </p>
+
+        <!-- Slider main container -->
+        <div class="swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+                <!-- Slides -->
+                <div class="swiper-slide">
+                    <img src="/img/slider-menu01.jpg" alt="" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="/img/slider-menu02.jpg" alt="" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="/img/slider-menu03.jpg" alt="" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="/img/slider-menu04.jpg" alt="" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="/img/slider-menu05.jpg" alt="" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="/img/slider-menu06.jpg" alt="" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="/img/slider-menu07.jpg" alt="" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="/img/slider-menu08.jpg" alt="" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="/img/slider-menu09.jpg" alt="" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="/img/slider-menu10.jpg" alt="" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="/img/slider-menu11.jpg" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+</LayoutContent>
+
+<script>
+    import Swiper from "swiper";
+    import { Autoplay, EffectFade } from "swiper/modules";
+    import "swiper/css/bundle";
+    import "swiper/css/effect-fade";
+    export const swiperConfig = {
+        modules: [Autoplay, EffectFade],
+        // Optional parameters
+        loop: false,
+        autoplay: { delay: 3000 },
+        effect: "fade",
+    };
+
+    const swiper = new Swiper(".swiper", swiperConfig);
+</script>
+
+<style lang="scss">
+    .content__inner {
+        padding: 60px 40px;
+        border: 1px solid var(--b);
+        border-radius: 25px;
+        margin-bottom: 20px;
+        font-family: "Noto Sans Variable", sans-serif;
+        @media (max-width: 768px) {
+            padding: 30px 20px;
+            border-radius: 10px;
+        }
+        h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            @media (max-width: 768px) {
+                font-size: 24px;
+                margin-bottom: 30px;
+            }
+        }
+        ul {
+            padding-inline-start: 20px;
+            margin-bottom: 40px;
+            li {
+                margin-bottom: 10px;
+                @media (max-width: 768px) {
+                    font-size: 14px;
+                }
+            }
+        }
+        .txt {
+            margin-bottom: 20px;
+        }
+        .txt-below {
+            margin-bottom: 40px;
+        }
+    }
+</style>

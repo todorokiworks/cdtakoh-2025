@@ -1,0 +1,119 @@
+---
+import LayoutLocation from "../layouts/LayoutLocation.astro";
+---
+
+<LayoutLocation
+    title="Location | CD.TAKOH2 | Japanese Yoshoku cuisine"
+    name="Location"
+    url="mv_location.png"
+>
+    <div class="contents__inner">
+        <div class="location__wrapper">
+            <div class="location">
+                <p class="pref">Osaka</p>
+                <p class="txt">Kitaku Nishitenma Osaka Japan</p>
+                <p class="txt">
+                    Further detailed access will be announced only to Reserved
+                    guests.
+                </p>
+            </div>
+            <div class="opening-time">
+                <a href="mailto:kanae.r@cdtakoh.com" class="mail"
+                    ><img src="/img/icon_mail_white.png" alt="" /></a
+                >
+                <div class="opening-txt">
+                    <p>Monday to Sunday</p>
+                    <p>Lunch time - Dinner time</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</LayoutLocation>
+
+<style lang="scss">
+    .contents__inner {
+        height: 700px;
+        background: url("/img/restaurant.jpg") center center / cover no-repeat;
+        border-radius: 25px;
+        margin-bottom: 20px;
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-end;
+        @media (max-width: 768px) {
+            height: 500px;
+            padding: 20px 0px;
+            border-radius: 10px;
+        }
+        &::before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.6909357492997199) 29%,
+                rgba(255, 0, 128, 0) 100%
+            );
+        }
+
+        div.location__wrapper {
+            position: relative;
+            padding: 30px 50px;
+            @media (max-width: 768px) {
+                padding: 30px 10px;
+            }
+            .location {
+                padding-bottom: 30px;
+                p.pref {
+                    font-size: 36px;
+                    font-weight: bold;
+                    @media (max-width: 768px) {
+                        font-size: 32px;
+                        margin-bottom: 10px;
+                    }
+                }
+                .txt {
+                    font-size: 18px;
+                    font-weight: 200;
+                    @media (max-width: 768px) {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+        div.opening-time {
+            display: flex;
+            align-items: center;
+            padding-top: 40px;
+            border-top: 1px solid var(--b);
+            @media (max-width: 768px) {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            a.mail {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                padding: 10px;
+                border: 1px solid var(--b);
+                margin-right: 20px;
+                width: 50px;
+                height: 50px;
+                @media (max-width: 768px) {
+                    margin-bottom: 20px;
+                }
+            }
+            div.opening-txt {
+                p {
+                    @media (max-width: 768px) {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+</style>

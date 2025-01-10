@@ -1,0 +1,19 @@
+---
+import { formatInTimeZone } from "date-fns-tz";
+import { getReservation, type EntryTime } from "@/types/microcmsReservation";
+const response = await getReservation({ fields: "entryMonth" });
+
+const jstDate = formatInTimeZone(
+  new Date(response.contents[0].entryMonth),
+  "Asia/Tokyo",
+  "yyyy-MM-dd",
+);
+---
+
+<p>
+  {response.contents.map((m: any) => <span>{m.entryMonth}</span>)}
+</p>
+
+<p>
+  {jstDate}
+</p>

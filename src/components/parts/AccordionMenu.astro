@@ -1,0 +1,192 @@
+---
+type nav = {
+    name: string;
+    url: string;
+};
+
+type isLocation = {
+    isLocation: boolean;
+};
+
+const { isLocation } = Astro.props;
+
+const nav = [
+    {
+        name: "Home",
+        url: "/",
+    },
+    {
+        name: "Menu",
+        url: "/menu",
+    },
+    {
+        name: "About",
+        url: "/about",
+    },
+    {
+        name: "Location",
+        url: "/location",
+    },
+    {
+        name: "Reservation",
+        url: "/reservation",
+    },
+];
+---
+
+<div class:list={["menu", { fixed: isLocation }]}>
+    <div class="nav-open">
+        <span class="line"></span>
+        CD.TAKOH2
+    </div>
+    <nav>
+        <ul>
+            {
+                nav.map((item: nav) => (
+                    <li class="nav-item">
+                        <a href={item.url} class="nav-link">
+                            {item.name}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </nav>
+</div>
+
+<script is:inline src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script is:inline>
+    const openMenu = () => {
+        $(".nav-open").click(function () {
+            $(this).toggleClass("active");
+            $(this).next("nav").slideToggle();
+        });
+    };
+
+    openMenu();
+
+    document.addEventListener("astro:after-swap", openMenu);
+</script>
+
+<style lang="scss">
+    div.menu {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 20px 30px 0;
+        border-radius: 25px;
+        width: 260px;
+        z-index: 999;
+
+        @media (max-width: 768px) {
+            position: fixed;
+            width: 220px;
+            padding: 15px 20px 0;
+            border-radius: 10px;
+        }
+        &.fixed {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+        }
+        nav {
+            display: none;
+            ul {
+                list-style: none;
+                margin-block-start: 0;
+                margin-block-end: 0;
+                padding-inline-start: 0px;
+                border-top: 1px solid var(--b);
+                padding: 30px 0;
+                @media (max-width: 768px) {
+                    padding: 15px 0;
+                }
+                li.nav-item {
+                    margin-bottom: 6px;
+                    a.nav-link {
+                        color: var(--b);
+                        font-size: 18px;
+                        @media (max-width: 768px) {
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .nav-open {
+            font-size: 24px;
+            text-align: right;
+            padding-bottom: 20px;
+            position: relative;
+            cursor: pointer;
+            @media (max-width: 768px) {
+                font-size: 20px;
+                padding-bottom: 15px;
+            }
+
+            span.line {
+                position: absolute;
+                top: 30%;
+                left: 10px;
+                width: 25px;
+                height: 2px;
+                background: #e08330;
+                transition: all 0.1s;
+                &::before {
+                    content: "";
+                    width: 100%;
+                    height: 2px;
+                    position: absolute;
+                    top: -7px;
+                    left: 0;
+                    background: #e08330;
+                    transition: all 0.5s;
+                }
+                &::after {
+                    content: "";
+                    width: 100%;
+                    height: 2px;
+                    position: absolute;
+                    top: 7px;
+                    left: 0;
+                    background: #e08330;
+                    transition: all 0.5s;
+                }
+            }
+        }
+
+        .nav-open.active {
+            span.line {
+                position: absolute;
+                top: 30%;
+                left: 10px;
+                width: 25px;
+                height: 2px;
+                background: #e08330;
+                height: 0;
+                &::before {
+                    content: "";
+                    width: 100%;
+                    height: 2px;
+                    position: absolute;
+                    top: 1px;
+                    left: 0;
+                    background: #e08330;
+                    transform: rotate(45deg);
+                }
+                &::after {
+                    content: "";
+                    width: 100%;
+                    height: 2px;
+                    position: absolute;
+                    top: 2px;
+                    left: 0;
+                    background: #e08330;
+                    transform: rotate(-45deg);
+                }
+            }
+        }
+    }
+</style>
