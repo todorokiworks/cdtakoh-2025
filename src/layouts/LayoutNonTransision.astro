@@ -68,9 +68,8 @@ const { title } = Astro.props;
       name="google-site-verification"
       content="32ol9mdb-4sRXAdzT8hkCrGWm7NUSI8z0FmlSJf2aEM"
     />
-    <ViewTransitions />
   </head>
-  <body transition:animate={slide({ duration: "1s" })}>
+  <body>
     <slot />
     <script>
       import { gsap } from "gsap";
