@@ -28,7 +28,7 @@ export interface EntryTime {
 //APIの呼び出し
 export const getReservation = async (queries?: MicroCMSQueries) => {
   return await client.get({
-    endpoint: "reservation",
+    endpoint: "reservation-schedule",
     queries,
   });
 };

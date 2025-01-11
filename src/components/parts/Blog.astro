@@ -1,25 +1,29 @@
 ---
 import { getBlog, type EntryTime } from "../../types/microcmsReservation";
-const res = await getBlog({ fields: ["title", "content", "image"] });
+const res = await getBlog();
+
+const title = res.title;
+const content = res.content;
+const images = res.images;
 ---
 
 <div class="blog">
   {
-    res.contents.map((item: any) => (
+    (
       <>
-        <h4>{item.title}</h4>
+        <h4>{title}</h4>
         <div class="content">
-          <p set:html={item.content} />
-          <div class="image__wrapper">
-            {item.image.map((i: any) => (
-              <div class="img">
-                <img src={i.url} alt="" />
-              </div>
-            ))}
-          </div>
+          <p set:html={content} class="content-txt" />
+        </div>
+        <div class="image__wrapper">
+          {images.map((i: any) => (
+            <div class="img">
+              <img src={i.url} alt="" />
+            </div>
+          ))}
         </div>
       </>
-    ))
+    )
   }
 </div>
 
@@ -33,6 +37,9 @@ const res = await getBlog({ fields: ["title", "content", "image"] });
     h4 {
       font-size: 30px;
       margin-bottom: 40px;
+    }
+    .content {
+      margin-bottom: 20px;
     }
     .image__wrapper {
       display: flex;

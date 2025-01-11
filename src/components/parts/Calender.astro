@@ -5,18 +5,19 @@ import {
   getReservation,
   type EntryTime,
 } from "../../types/microcmsReservation";
-const reservationRes = await getReservation({
-  fields: ["entryMonth", "entryDates", "entryTimes"],
-});
+const reservationRes = await getReservation();
 
 interface CalendarDay {
   day: number | null; // 日付 (nullなら空白)
   times?: EntryTime[]; // 該当する時間のデータ
 }
 
+const entryDate = reservationRes.entryMonth
+  ? new Date(reservationRes.entryMonth)
+  : new Date();
 // 現在日付を設定
 const jstDate = formatInTimeZone(
-  new Date(reservationRes.contents[0].entryMonth),
+  new Date(entryDate),
   "Asia/Tokyo",
   "yyyy-MM-dd",
 );
@@ -79,7 +80,7 @@ function getTimesForDay(day: number): EntryTime[] | undefined {
   const targetDate = formatInTimeZone(date, "Asia/Tokyo", "yyyy-MM-dd");
 
   // entryDateをJSTに変換して比較
-  const match = reservationRes.contents[0].entryDates.find((d: any) => {
+  const match = reservationRes.entryDates.find((d: any) => {
     if (!d.entryDate) return false;
     const entryDateJST = formatInTimeZone(
       new Date(d.entryDate),
